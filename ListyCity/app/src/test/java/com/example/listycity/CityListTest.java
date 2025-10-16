@@ -48,13 +48,14 @@ class CityListTest {
     @Test
     void testHasCity() {
         CityList cityList = new CityList();
+        CityList emptyCityList = mockCityList();
         City edmonton1 = new City("Edmonton", "Alberta");
         City edmonton2 = new City("Edmonton", "Alberta");
         City calgary = new City("Calgary", "Alberta");
 
         cityList.add(edmonton1);
 
-        assertTrue(cityList.hasCity(edmonton1), "Should detect city already added");
+        assertTrue(emptyCityList.hasCity(edmonton1), "Should detect city already added");
         assertTrue(cityList.hasCity(edmonton2), "Should detect equivalent city due to equals()");
         assertFalse(cityList.hasCity(calgary), "Should return false for city not in list");
     }
@@ -66,12 +67,14 @@ class CityListTest {
         City regina   = new City("Regina", "Saskatchewan");
         cityList.add(edmonton);
         cityList.add(regina);
+        CityList emptyCityList = mockCityList();
 
         assertTrue(cityList.hasCity(edmonton));
         assertEquals(2, cityList.getCities().size());
 
         cityList.delete(edmonton);
-
+        emptyCityList.delete(edmonton);
+        assertFalse(emptyCityList.hasCity(edmonton));
         assertFalse(cityList.hasCity(edmonton));
         assertTrue(cityList.hasCity(regina));
         assertEquals(1, cityList.getCities().size());
